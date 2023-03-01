@@ -8,35 +8,72 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AGT'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of AGT.'
+  s.version          = '1.0.0'
+  s.summary          = 'AGT - Automation Generating Tests.'
+  s.homepage         = 'https://github.com/rishatl/AGT'
+  s.license          = { type: 'CUSTOM', text: "Copyright (c) #{Date.today.year} r.latypov" }
+  s.author           = { 'Latypov Rishat Ildarovich' => 'rishatl@inbox.ru' }
+  s.source           = { git: "https://github.com/rishatl/AGT.git", tag: "AGT/#{s.version}" }
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.ios.deployment_target = '13.0'
+  s.static_framework = true
+  s.swift_version = '5.0'
+  s.frameworks = 'XCTest', 'Foundation', 'UIKit', 'CoreGraphics'
+  s.source_files = 'AGT/Sources/**/*.{h,m,swift}'
+  s.prefix_header_file = false
+  s.module_map = false
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.pod_target_xcconfig = {
+    'SWIFT_INSTALL_OBJC_HEADER' => 'NO',
+    'SWIFT_OBJC_INTERFACE_HEADER_NAME' => '',
+    'ENABLE_TESTING_SEARCH_PATHS' => 'YES',
+    'EXCLUDED_SOURCE_FILE_NAMES' => '*-dummy.m'
+  }
 
-  s.homepage         = 'https://github.com/Латыпов Ришат Ильдарович/AGT'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Латыпов Ришат Ильдарович' => '68281667+rishatl@users.noreply.github.com' }
-  s.source           = { :git => 'https://github.com/Латыпов Ришат Ильдарович/AGT.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  # Resources
+  r_swift_resources = [
+    "#{s.name}/Resources/**/*.{xcassets,strings,stringsdict,xcdatamodeld,json}"
+  ]
+  r_swift_input_file_list = "#{s.name}/#{s.name}-Rswift-InputFiles.xcfilelist"
+  s.preserve_path = r_swift_input_file_list
 
-  s.ios.deployment_target = '10.0'
+  r_swift_prepare_script = <<-SCRIPT
+    require "fileutils"
+    FileUtils.touch "#{s.name}/Sources/R.generated.swift"
+    r_swift_input_files = #{r_swift_resources}.map { |p| Dir.glob(p) }.flatten.map { |p| "${PODS_TARGET_SRCROOT}/\#{p}" }
+    File.open("#{r_swift_input_file_list}", "w") { |file| file.write(r_swift_input_files.join("\n")) }
+  SCRIPT
 
-  s.source_files = 'AGT/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'AGT' => ['AGT/Assets/*.png']
-  # }
+  s.prepare_command = <<-SCRIPT
+    ruby -e '#{r_swift_prepare_script}'
+  SCRIPT
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  resources_bundle_name = "#{s.name}Resources"
+  s.resource_bundles = {
+    resources_bundle_name => r_swift_resources
+  }
+
+  r_swift_output = "${PODS_TARGET_SRCROOT}/#{s.name}/Sources/R.generated.swift"
+  r_swift_script = <<~SCRIPT
+      [[ $ACTION == "indexbuild" ]] && exit
+      "$PODS_ROOT/R.swift/rswift" generate "#{r_swift_output}" --hostingBundle '#{resources_bundle_name}' --target '#{s.name}-#{s.name}Resources'
+      chmod 0666 "#{r_swift_output}"
+      sed -i '' -e 's/fileprivate static let hostingBundle /static let hostingBundle /g' "#{r_swift_output}"
+      chmod 0444 "#{r_swift_output}"
+  SCRIPT
+
+  s.script_phases = [
+    {
+      name: 'R.swift',
+      input_files: ["${PODS_TARGET_SRCROOT}/#{r_swift_input_file_list}"],
+      output_files: [r_swift_output],
+      script: r_swift_script,
+      execution_position: :before_compile,
+      show_env_vars_in_log: '0'
+    }
+  ]
+
+  s.dependency 'R.swift', '~> 6.1.0'
+  s.dependency 'Swifter'
+  s.dependency 'SwiftyJSON'
 end

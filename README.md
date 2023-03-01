@@ -1,6 +1,5 @@
 # AGT
 
-[![CI Status](https://img.shields.io/travis/Латыпов Ришат Ильдарович/AGT.svg?style=flat)](https://travis-ci.org/Латыпов Ришат Ильдарович/AGT)
 [![Version](https://img.shields.io/cocoapods/v/AGT.svg?style=flat)](https://cocoapods.org/pods/AGT)
 [![License](https://img.shields.io/cocoapods/l/AGT.svg?style=flat)](https://cocoapods.org/pods/AGT)
 [![Platform](https://img.shields.io/cocoapods/p/AGT.svg?style=flat)](https://cocoapods.org/pods/AGT)
@@ -22,7 +21,7 @@ pod 'AGT'
 
 ## Author
 
-Латыпов Ришат Ильдарович, 68281667+rishatl@users.noreply.github.com
+Латыпов Ришат Ильдарович, https://github.com/rishatl
 
 ## License
 

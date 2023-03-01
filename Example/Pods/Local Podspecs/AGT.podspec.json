@@ -1,0 +1,70 @@
+{
+  "name": "AGT",
+  "version": "1.0.0",
+  "summary": "AGT - Automation Generating Tests.",
+  "homepage": "https://github.com/rishatl/AGT",
+  "license": {
+    "type": "CUSTOM",
+    "text": "Copyright (c) 2023 r.latypov"
+  },
+  "authors": {
+    "Latypov Rishat Ildarovich": "rishatl@inbox.ru"
+  },
+  "source": {
+    "git": "https://github.com/rishatl/AGT.git",
+    "tag": "AGT/1.0.0"
+  },
+  "platforms": {
+    "ios": "13.0"
+  },
+  "static_framework": true,
+  "swift_versions": "5.0",
+  "frameworks": [
+    "XCTest",
+    "Foundation",
+    "UIKit",
+    "CoreGraphics"
+  ],
+  "source_files": "AGT/Sources/**/*.{h,m,swift}",
+  "prefix_header_file": false,
+  "module_map": false,
+  "pod_target_xcconfig": {
+    "SWIFT_INSTALL_OBJC_HEADER": "NO",
+    "SWIFT_OBJC_INTERFACE_HEADER_NAME": "",
+    "ENABLE_TESTING_SEARCH_PATHS": "YES",
+    "EXCLUDED_SOURCE_FILE_NAMES": "*-dummy.m"
+  },
+  "preserve_paths": "AGT/AGT-Rswift-InputFiles.xcfilelist",
+  "prepare_command": "ruby -e '    require \"fileutils\"\n    FileUtils.touch \"AGT/Sources/R.generated.swift\"\n    r_swift_input_files = [\"AGT/Resources/**/*.{xcassets,strings,stringsdict,xcdatamodeld,json}\"].map { |p| Dir.glob(p) }.flatten.map { |p| \"${PODS_TARGET_SRCROOT}/#{p}\" }\n    File.open(\"AGT/AGT-Rswift-InputFiles.xcfilelist\", \"w\") { |file| file.write(r_swift_input_files.join(\"\n\")) }\n'",
+  "resource_bundles": {
+    "AGTResources": [
+      "AGT/Resources/**/*.{xcassets,strings,stringsdict,xcdatamodeld,json}"
+    ]
+  },
+  "script_phases": [
+    {
+      "name": "R.swift",
+      "input_files": [
+        "${PODS_TARGET_SRCROOT}/AGT/AGT-Rswift-InputFiles.xcfilelist"
+      ],
+      "output_files": [
+        "${PODS_TARGET_SRCROOT}/AGT/Sources/R.generated.swift"
+      ],
+      "script": "[[ $ACTION == \"indexbuild\" ]] && exit\n\"$PODS_ROOT/R.swift/rswift\" generate \"${PODS_TARGET_SRCROOT}/AGT/Sources/R.generated.swift\" --hostingBundle 'AGTResources' --target 'AGT-AGTResources'\nchmod 0666 \"${PODS_TARGET_SRCROOT}/AGT/Sources/R.generated.swift\"\nsed -i '' -e 's/fileprivate static let hostingBundle /static let hostingBundle /g' \"${PODS_TARGET_SRCROOT}/AGT/Sources/R.generated.swift\"\nchmod 0444 \"${PODS_TARGET_SRCROOT}/AGT/Sources/R.generated.swift\"\n",
+      "execution_position": "before_compile",
+      "show_env_vars_in_log": "0"
+    }
+  ],
+  "dependencies": {
+    "R.swift": [
+      "~> 6.1.0"
+    ],
+    "Swifter": [
+
+    ],
+    "SwiftyJSON": [
+
+    ]
+  },
+  "swift_version": "5.0"
+}
