@@ -39,11 +39,11 @@ public extension HTTPModelShortType {
         guard firstOccurrence else { return }
         firstOccurrence = false
 
-        // First let's make sure setter: URLSessionConfiguAGTion.protocolClasses is de-duped
+        // First let's make sure setter: URLSessionConfiguagtion.protocolClasses is de-duped
         // This ensures AGTProtocol won't be added twice
         swizzleProtocolSetter()
 
-        // Now, let's make sure AGTProtocol is always included in the default and ephemeral configuAGTion(s)
+        // Now, let's make sure AGTProtocol is always included in the default and ephemeral configuration(s)
         // Adding it twice won't be an issue anymore, because we've de-duped the setter
         swizzleDefault()
         swizzleEphemeral()

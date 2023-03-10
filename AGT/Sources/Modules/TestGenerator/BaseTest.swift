@@ -8,6 +8,7 @@
 import XCTest
 
 open class BaseTest: XCTestCase {
+
     // MARK: Public Data Structures
 
     public typealias TestCustomCurrentDate = (testName: String, dateString: String)

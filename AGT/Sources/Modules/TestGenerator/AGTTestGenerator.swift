@@ -9,13 +9,13 @@ import Foundation
 
 public class AGTTestGenerator {
 
-    static func generateSwiftTest(fileName: String, identifiers: [String]) {
-        let fileName = "\(fileName).swift"
+    static func createUITest(testName: String, identifiers: [String]) {
+        let fileName = "\(testName).swift"
         let folderPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
 
-        let filePath = "\(folderPath)/\(fileName)"
+        let filePath = "\(folderPath)/\(testName)/\(fileName)"
 
-        let generatedTest = createTest(testClassName: "\(fileName)", identifiers: identifiers)
+        let generatedTest = generateTest(testClassName: "\(testName)", identifiers: identifiers)
 
         do {
             try generatedTest.write(toFile: filePath, atomically: true, encoding: .utf8)
@@ -23,11 +23,10 @@ public class AGTTestGenerator {
             print("Error writing file: \(error.localizedDescription)")
         }
 
-        print("File generated and saved at: \(filePath)")
+        print("Test generated and saved at: \(filePath)")
     }
 
-    private static func createTest(
-        projectName: String? = nil,
+    private static func generateTest(
         testClassName: String,
         identifiers: [String]
     ) -> String {
@@ -39,7 +38,7 @@ final class \(testClassName): BaseMockTest {
     func testHappyPath() {
 
         launchApp()
-//        dynamicStubs.setupStubsForPath("Stubs/Loans/issue1104279")
+        dynamicStubs.setupStubsForGroup("\(testClassName)")
 
         // Assert
 

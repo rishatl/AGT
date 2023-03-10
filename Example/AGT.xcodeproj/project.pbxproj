@@ -14,11 +14,11 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		79246BA829BB352B0075E7FF /* Stubs in Resources */ = {isa = PBXBuildFile; fileRef = 79246BA729BB352B0075E7FF /* Stubs */; };
 		79B9B22729ACAC9700017433 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		79B9B23B29ACBB7C00017433 /* AGT_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B9B23A29ACBB7C00017433 /* AGT_UITests.swift */; };
 		79B9B23D29ACBB7C00017433 /* AGT_UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B9B23C29ACBB7C00017433 /* AGT_UITestsLaunchTests.swift */; };
 		79B9B24529ACBBAD00017433 /* MyTestClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B9B24429ACBBAD00017433 /* MyTestClass.swift */; };
-		79B9B24729ACBBB400017433 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 79B9B24629ACBBB400017433 /* Resources */; };
 		A5D538821357C94A4B16C599 /* Pods_AGT_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BD8C4F3A544C643C4B0611 /* Pods_AGT_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,11 +54,11 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		73823A6539F2DC92F60C1930 /* Pods-AGT_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AGT_Tests.debug.xcconfig"; path = "Target Support Files/Pods-AGT_Tests/Pods-AGT_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		79246BA729BB352B0075E7FF /* Stubs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stubs; sourceTree = "<group>"; };
 		79B9B23829ACBB7B00017433 /* AGT_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AGT_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79B9B23A29ACBB7C00017433 /* AGT_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGT_UITests.swift; sourceTree = "<group>"; };
 		79B9B23C29ACBB7C00017433 /* AGT_UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGT_UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		79B9B24429ACBBAD00017433 /* MyTestClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTestClass.swift; sourceTree = "<group>"; };
-		79B9B24629ACBBB400017433 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		984E89A120ECBF066D2FE598 /* Pods-AGT_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AGT_Tests.release.xcconfig"; path = "Target Support Files/Pods-AGT_Tests/Pods-AGT_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		CB0345036FFF7BCE6B6FB040 /* Pods-AGT_UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AGT_UITests.release.xcconfig"; path = "Target Support Files/Pods-AGT_UITests/Pods-AGT_UITests.release.xcconfig"; sourceTree = "<group>"; };
 		D249538FF1FB29A5C1DF8B49 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -185,7 +185,6 @@
 		79B9B23929ACBB7C00017433 /* AGT_UITests */ = {
 			isa = PBXGroup;
 			children = (
-				79B9B24629ACBBB400017433 /* Resources */,
 				79B9B24329ACBBAD00017433 /* Tests */,
 				79B9B23A29ACBB7C00017433 /* AGT_UITests.swift */,
 				79B9B23C29ACBB7C00017433 /* AGT_UITestsLaunchTests.swift */,
@@ -196,6 +195,7 @@
 		79B9B24329ACBBAD00017433 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				79246BA729BB352B0075E7FF /* Stubs */,
 				79B9B24429ACBBAD00017433 /* MyTestClass.swift */,
 			);
 			path = Tests;
@@ -345,7 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79B9B24729ACBBB400017433 /* Resources in Resources */,
+				79246BA829BB352B0075E7FF /* Stubs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

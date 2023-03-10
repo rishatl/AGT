@@ -63,7 +63,6 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 
     func saveRequestBody(_ request: URLRequest) {
-        print(request.getAGTBody())
         saveRequestBodyData(request.getAGTBody())
     }
 
@@ -200,14 +199,54 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
             do {
                 let rawJsonData = try JSONSerialization.jsonObject(with: rawData, options: [])
                 let prettyPrintedString = try JSONSerialization.data(withJSONObject: rawJsonData, options: [.prettyPrinted])
-                print("!!!" + String(data: prettyPrintedString, encoding: String.Encoding.utf8)!)
-                return String(data: prettyPrintedString, encoding: String.Encoding.utf8)
+                let responseBodyString = String(data: prettyPrintedString, encoding: String.Encoding.utf8)
+                try createStub(responseBody: responseBodyString ?? "")
+                return responseBodyString
             } catch {
                 return nil
             }
         default:
             return nil
         }
+    }
+
+    private func createStub(responseBody: String) throws {
+        let stripRequestURL = stripHTTPPrefix(requestURL!)
+        let requestURL = replaceChar(stripRequestURL, "/", "@")
+        let fileName = "\(requestMethod!)_\(requestURL).json"
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let subfolderURL = documentsDirectory.appendingPathComponent("\(AGT.testName!)/Stubs/group\(AGT.testName!)")
+
+        do {
+            try fileManager.createDirectory(at: subfolderURL, withIntermediateDirectories: true, attributes: nil)
+            let fileURL = subfolderURL.appendingPathComponent(fileName)
+            try responseBody.write(toFile: fileURL.path, atomically: true, encoding: .utf8)
+            print("File created successfully in group\(AGT.testName!) folder")
+        } catch {
+            print("Error creating file: \(error.localizedDescription)")
+        }
+    }
+
+    private func replaceChar(_ input: String, _ charToReplace: Character, _ replacementChar: Character) -> String {
+        var result = ""
+        for char in input {
+            if char == charToReplace {
+                result += String(replacementChar)
+            } else {
+                result += String(char)
+            }
+        }
+        return result
+    }
+
+    private func stripHTTPPrefix(_ input: String) -> String {
+        if input.hasPrefix("http://") {
+            return String(input.dropFirst(7))
+        } else if input.hasPrefix("https://") {
+            return String(input.dropFirst(8))
+        }
+        return input
     }
 
     @objc public func isSuccessful() -> Bool {

@@ -69,6 +69,7 @@
 		6D3DD719731DCE17C3C80FD81F0060CC /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61BBEFFCE8FCB28D07010FBB6138C6E /* WebSockets.swift */; };
 		74E25D28F57B37D703AFEC5192FBB1BF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		76BCCF133AD954D4D437516B7EC8E909 /* Errno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F07F65E8C5EE1517289619EEA1AB7C /* Errno.swift */; };
+		79942CF729B8B1C100F5D82F /* AGTArchivator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79942CF629B8B1C100F5D82F /* AGTArchivator.swift */; };
 		7EA1CF48EF0AF773F454DA4CD485B173 /* UIStoryboard+StoryboardViewControllerResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F26D4B33B67F7997E0D9FCE49F4AB1F /* UIStoryboard+StoryboardViewControllerResource.swift */; };
 		7F9A0B7041D787C1A811C0520BA3B4DC /* UIColor+ColorResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B06C468BC800842882D4115270D1041 /* UIColor+ColorResource.swift */; };
 		835E077F45B477860AA04859D056AAA9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
@@ -291,6 +292,7 @@
 		76E6DC274550042C26DB20780FB6E5E6 /* HTTPDynamicStubs+SetupStubs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "HTTPDynamicStubs+SetupStubs.swift"; sourceTree = "<group>"; };
 		76EDFF65E2771779E5D9158E02EEA2DF /* AGT-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AGT-dummy.m"; sourceTree = "<group>"; };
 		78556A96B2527BD029857368D98EBFA6 /* UITableView+ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UITableView+ReuseIdentifierProtocol.swift"; path = "Library/UIKit/UITableView+ReuseIdentifierProtocol.swift"; sourceTree = "<group>"; };
+		79942CF629B8B1C100F5D82F /* AGTArchivator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGTArchivator.swift; sourceTree = "<group>"; };
 		79FE0F16B7D58DAC4E9676ABA17ED220 /* QueryStub.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QueryStub.swift; sourceTree = "<group>"; };
 		7A3DE04C8B1C93F05F4538C5FF03FC38 /* Pods-AGT_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AGT_Example-umbrella.h"; sourceTree = "<group>"; };
 		7A5272E313C12B50983BBC72B35C21CA /* FontResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontResource.swift; path = Library/Core/FontResource.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				65DA64A73690DA63E3B339794C16C4A1 /* BaseMockTest.swift */,
 				8428A50B6C718ED99D68CDC902D14A5D /* BasePage.swift */,
 				8D97E858DDBFD2B8DCD83EFA78BC2DBF /* BaseTest.swift */,
+				79942CF629B8B1C100F5D82F /* AGTArchivator.swift */,
 			);
 			path = TestGenerator;
 			sourceTree = "<group>";
@@ -666,7 +669,7 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		97016E0DECB446EE688321AEDE69F2D2 /* StubGenerator */ = {
+		97016E0DECB446EE688321AEDE69F2D2 /* ResponseInteceptor */ = {
 			isa = PBXGroup;
 			children = (
 				0D3BAFAEA1374848C372680B0903D657 /* AGTAuthentificationChallengeSender.swift */,
@@ -675,7 +678,7 @@
 				FE3617D27D82E8C1A391A02DE31BB77C /* AGTHTTPModelManager.swift */,
 				85736975594C3697AC2D2E2F8288D04F /* AGTProtocol.swift */,
 			);
-			path = StubGenerator;
+			path = ResponseInteceptor;
 			sourceTree = "<group>";
 		};
 		997184864571C8088D692C9D5F60B796 /* DynamicStubs */ = {
@@ -775,7 +778,7 @@
 				A3A6E7D07AA762C0CB9BC6283B5F03A2 /* Extensions */,
 				4D464BA46E7DC6F485358FFFFB2E1BBB /* Parser */,
 				A0F710D48B5544374B24BA72BCB161A0 /* SnackBar */,
-				97016E0DECB446EE688321AEDE69F2D2 /* StubGenerator */,
+				97016E0DECB446EE688321AEDE69F2D2 /* ResponseInteceptor */,
 				41409757966C0998B9AE67CFD7F223A9 /* TestGenerator */,
 			);
 			name = Modules;
@@ -1205,6 +1208,7 @@
 				900D4A1EEE717154195F4EEA3A04217F /* BaseTest.swift in Sources */,
 				E4DC07E573906A82FB719A81127BE8B0 /* Bundle+Extensions.swift in Sources */,
 				380565BA3F1A6BA047A50F74511CDFF3 /* HTTPDynamicStubs.swift in Sources */,
+				79942CF729B8B1C100F5D82F /* AGTArchivator.swift in Sources */,
 				2F6D5E99D132BEB295FEFBF90AA24EBE /* HTTPDynamicStubs+Helpers.swift in Sources */,
 				BD875AACFEB74559671A1EDD896BED3D /* HTTPDynamicStubs+Response.swift in Sources */,
 				49A0B06B9CB67CA2EB37C7D4F224D255 /* HTTPDynamicStubs+SetupStubs.swift in Sources */,

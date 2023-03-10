@@ -30,7 +30,7 @@ extension HTTPDynamicStubs {
         }
 
         guard let stringData = String(data: data, encoding: .utf8) else {
-            throw fatalError("\(fileURL) error..")
+            fatalError("\(fileURL) error..")
         }
 
         switch ext {

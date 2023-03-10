@@ -13,11 +13,11 @@ final class MyTestClass: BaseMockTest {
     func testHappyPath() {
 
         launchApp()
-//        dynamicStubs.setupStubsForPath("Stubs/Loans/issue1104279")
+        dynamicStubs.setupStubsForGroup("Test")
 
         let idddButton = app.otherElements["iddd"].firstMatch
         MainPage().apply {
-            $0.runActivity(named: "") { _ in
+            $0.runActivity(named: "Нажимаем на 1 элемент") { _ in
                 idddButton.wait().tap()
             }
         }

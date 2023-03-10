@@ -47,7 +47,7 @@ public extension BasePage {
 
     func verifyInPage(identifier: String) {
         XCTContext.runActivity(named: "Проверяем текст") { _ in
-            let value = app.staticTexts.matching(identifier: identifier).firstMatch.label
+            _ = app.staticTexts.matching(identifier: identifier).firstMatch.label
         }
     }
 

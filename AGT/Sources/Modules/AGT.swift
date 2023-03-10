@@ -28,6 +28,8 @@ open class AGT: NSObject {
 
     internal var cacheStoragePolicy = URLCache.StoragePolicy.notAllowed
 
+    internal static var testName: String?
+    internal var folderURL: URL?
     internal var identifiers: [String] = []
 
     class var swiftSharedInstance: AGT {
@@ -57,6 +59,11 @@ open class AGT: NSObject {
         register()
         enable()
         fileStorageInit()
+        do {
+            try createTestFolder()
+        } catch {
+            fatalError("Create \(AGT.testName ?? "") folder error..")
+        }
         showMessage(Constants.startedMessage.rawValue)
     }
 
@@ -66,7 +73,7 @@ open class AGT: NSObject {
             return
         }
 
-        AGTTestGenerator.generateSwiftTest(fileName: "MyTestClass", identifiers: identifiers)
+        AGTTestGenerator.createUITest(testName: AGT.testName!, identifiers: identifiers)
         identifiers.removeAll()
         unregister()
         disable()
@@ -77,7 +84,6 @@ open class AGT: NSObject {
 
     fileprivate func showMessage(_ msg: String) {
         print("AGT \(msg)")
-        print(identifiers)
     }
 
     internal func isEnabled() -> Bool {
@@ -139,6 +145,26 @@ open class AGT: NSObject {
         AGTPath.createAGTDirIfNotExist()
     }
 
+    private func createTestFolder() throws {
+        let fileManager = FileManager.default
+        let testName = "Test_issue_\(UUID().uuidString)"
+        AGT.testName = testName
+
+        // Get the documents directory URL
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            throw NSError(domain: "com.example.app", code: 500, userInfo: [NSLocalizedDescriptionKey: "Failed to retrieve documents directory"])
+        }
+
+        // Append the folder name to the documents directory URL
+        let folderURL = documentsURL.appendingPathComponent(testName, isDirectory: true)
+        self.folderURL = folderURL
+
+        // Create the folder if it doesn't already exist
+        if !fileManager.fileExists(atPath: folderURL.path) {
+            try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+        }
+    }
+
     internal func clearOldData() {
         AGTHTTPModelManager.shared.clear()
 
@@ -169,16 +195,16 @@ extension AGT {
     }
 
     fileprivate func showAGTFollowingPlatform() {
-        showAGT(on: presentingViewController, with: "Record Mode: On")
+        showSnackBar(on: presentingViewController, with: "Record Mode: On")
     }
 
     fileprivate func hideAGTFollowingPlatform() {
         navigationViewController?.presentingViewController?.dismiss(animated: true)
         navigationViewController = nil
-        showAGT(on: presentingViewController, with: "Record Mode: Off")
+        showSnackBar(on: presentingViewController, with: "Record Mode: Off")
     }
 
-    fileprivate func showAGT(on rootViewController: UIViewController?, with text: String) {
+    fileprivate func showSnackBar(on rootViewController: UIViewController?, with text: String) {
         guard let rootView = rootViewController?.view else { return }
         let snackbarView = SnackBar()
         snackbarView.showSnackBar(view: rootView, bgColor: UIColor(red: 21 / 256, green: 21 / 256, blue: 21 / 256, alpha: 1), text: text, textColor: .white, interval: 2)
