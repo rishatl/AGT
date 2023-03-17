@@ -16,9 +16,13 @@ final class MyTestClass: BaseMockTest {
         dynamicStubs.setupStubsForGroup("Test")
 
         let idddButton = app.otherElements["iddd"].firstMatch
+        let str1View = app.staticTexts["Send request"].firstMatch
         MainPage().apply {
             $0.runActivity(named: "Нажимаем на 1 элемент") { _ in
                 idddButton.wait().tap()
+            }
+            $0.runActivity(named: "Нажимаем на 2 элемент") { _ in
+                str1View.wait().tap()
             }
         }
     }

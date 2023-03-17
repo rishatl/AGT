@@ -9,13 +9,13 @@ import Foundation
 
 public class AGTTestGenerator {
 
-    static func createUITest(testName: String, identifiers: [String]) {
+    static func createUITest(testName: String, identifiers: [String?], strings: [String]) {
         let fileName = "\(testName).swift"
         let folderPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
 
         let filePath = "\(folderPath)/\(testName)/\(fileName)"
 
-        let generatedTest = generateTest(testClassName: "\(testName)", identifiers: identifiers)
+        let generatedTest = generateTest(testClassName: "\(testName)", identifiers: identifiers, strings: strings)
 
         do {
             try generatedTest.write(toFile: filePath, atomically: true, encoding: .utf8)
@@ -28,7 +28,8 @@ public class AGTTestGenerator {
 
     private static func generateTest(
         testClassName: String,
-        identifiers: [String]
+        identifiers: [String?],
+        strings: [String]
     ) -> String {
         var fileContent = """
 import AGT
@@ -43,7 +44,7 @@ final class \(testClassName): BaseMockTest {
         // Assert
 
 """
-        fileContent += generateStringWithIdentifiers(identifiers: identifiers)
+        fileContent += generateStringWithIdentifiers(identifiers: identifiers, strings: strings)
         fileContent += """
     }
 }
@@ -58,13 +59,22 @@ final class MainPage: BasePage {
         return fileContent
     }
 
-    private static func generateStringWithIdentifiers(identifiers: [String]) -> String {
+    private static func generateStringWithIdentifiers(identifiers: [String?], strings: [String]) -> String {
         var stringIdentifiers: String = ""
         for (index, identifier) in identifiers.enumerated() {
-            stringIdentifiers += """
-                            let view\(index) = app.otherElements["\(identifier)"].firstMatch
+            if let identifier = identifier {
+                stringIdentifiers += """
+                            let idView\(index) = app.otherElements["\(identifier)"].firstMatch
 
                     """
+            } else {
+                for string in strings {
+                    stringIdentifiers += """
+                                        let strView\(index) = app.staticTexts["\(string)"].firstMatch
+
+                                """
+                }
+            }
         }
         stringIdentifiers += """
 
@@ -72,13 +82,22 @@ final class MainPage: BasePage {
 
             """
 
-        for (index, _) in identifiers.enumerated() {
-            stringIdentifiers += """
-                                $0.runActivity(named: "Нажимаем на \(index) элемент") { _ in
-                                    view\(index).wait().tap()
+        for (index, identifier) in identifiers.enumerated() {
+            if let _ = identifier {
+                stringIdentifiers += """
+                                $0.runActivity(named: "Нажимаем на \(index) элемент с идентификатором") { _ in
+                                    idView\(index).wait().tap()
                                 }
 
                     """
+            } else {
+                stringIdentifiers += """
+                                $0.runActivity(named: "Нажимаем на \(index) элемент с текстом") { _ in
+                                    strView\(index).wait().tap()
+                                }
+
+                    """
+            }
         }
         stringIdentifiers += """
                 }

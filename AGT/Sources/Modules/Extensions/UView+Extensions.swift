@@ -28,14 +28,31 @@ public extension UIView {
         print(Self.self, #function)
         let view = self.hitTest_x(point, with: event)
         if view === self {
-            guard let str = view?.accessibilityIdentifier else {
-                print("accessibilityIdentifier entry error..")
-                return nil
-            }
-            if !AGT.sharedInstance().identifiers.contains(str) {
-                AGT.sharedInstance().identifiers.append(str)
+            if let str = view?.accessibilityIdentifier {
+                if !AGT.sharedInstance().identifiers.contains(str) {
+                    AGT.sharedInstance().identifiers.append(str)
+                }
+            } else if let view = view, let text = getTextFromView(view) {
+                if !AGT.sharedInstance().strings.contains(text) {
+                    AGT.sharedInstance().identifiers.append(nil)
+                    AGT.sharedInstance().strings.append(text)
+                }
             }
         }
         return view
+    }
+
+    private func getTextFromView(_ view: UIView) -> String? {
+        if let label = view as? UILabel {
+            return label.text
+        }
+
+        for subview in view.subviews {
+            if let text = getTextFromView(subview) {
+                return text
+            }
+        }
+
+        return nil
     }
 }

@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         button.backgroundColor = .black
         button.setTitle("Send request", for: [])
         button.layer.cornerRadius = 20
-        button.accessibilityIdentifier = "btn id"
+//        button.accessibilityIdentifier = "btn id"
         view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

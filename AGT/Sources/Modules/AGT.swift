@@ -30,7 +30,8 @@ open class AGT: NSObject {
 
     internal static var testName: String?
     internal var folderURL: URL?
-    internal var identifiers: [String] = []
+    internal var identifiers: [String?] = []
+    internal var strings: [String] = []
 
     class var swiftSharedInstance: AGT {
         struct Singleton {
@@ -73,7 +74,7 @@ open class AGT: NSObject {
             return
         }
 
-        AGTTestGenerator.createUITest(testName: AGT.testName!, identifiers: identifiers)
+        AGTTestGenerator.createUITest(testName: AGT.testName!, identifiers: identifiers, strings: strings)
         identifiers.removeAll()
         unregister()
         disable()
