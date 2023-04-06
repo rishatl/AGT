@@ -1,8 +1,8 @@
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks" "${PODS_CONFIGURATION_BUILD_DIR}/AGT" "${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library" "${PODS_CONFIGURATION_BUILD_DIR}/Swifter" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks" "${PODS_CONFIGURATION_BUILD_DIR}/AGT" "${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library" "${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive" "${PODS_CONFIGURATION_BUILD_DIR}/Swifter" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AGT/AGT.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library/Rswift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Swifter/Swifter.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON/SwiftyJSON.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "CoreGraphics" -framework "Foundation" -framework "Rswift" -framework "Swifter" -framework "SwiftyJSON" -framework "UIKit" -framework "XCTest"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AGT/AGT.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library/Rswift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive/SSZipArchive.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Swifter/Swifter.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON/SwiftyJSON.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -l"iconv" -l"z" -framework "CoreGraphics" -framework "Foundation" -framework "Rswift" -framework "SSZipArchive" -framework "Security" -framework "Swifter" -framework "SwiftyJSON" -framework "UIKit" -framework "XCTest"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

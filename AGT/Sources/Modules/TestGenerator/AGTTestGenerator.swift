@@ -9,7 +9,7 @@ import Foundation
 
 public class AGTTestGenerator {
 
-    static func createUITest(testName: String, identifiers: [String?], strings: [String]) {
+    static func createUITest(testName: String, identifiers: [String?], strings: [String], completion: @escaping (String) -> Void) {
         let fileName = "\(testName).swift"
         let folderPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
 
@@ -24,6 +24,7 @@ public class AGTTestGenerator {
         }
 
         print("Test generated and saved at: \(filePath)")
+        completion(folderPath)
     }
 
     private static func generateTest(

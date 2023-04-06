@@ -7,6 +7,7 @@ target 'AGT_Example' do
   pod 'R.swift', '~> 6.1.0'
   pod 'Swifter'
   pod 'SwiftyJSON'
+  pod 'SSZipArchive'
 
   target 'AGT_Tests' do
     inherit! :search_paths
@@ -17,6 +18,7 @@ target 'AGT_Example' do
     pod 'R.swift', '~> 6.1.0'
     pod 'Swifter'
     pod 'SwiftyJSON'
+    pod 'SSZipArchive'
   end
 
   post_install do |installer_representation|

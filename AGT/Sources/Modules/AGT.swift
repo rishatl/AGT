@@ -33,6 +33,9 @@ open class AGT: NSObject {
     internal var identifiers: [String?] = []
     internal var strings: [String] = []
 
+    internal var repoURL: String?
+    internal var authToken: String?
+
     class var swiftSharedInstance: AGT {
         struct Singleton {
             static let instance = AGT()
@@ -74,7 +77,23 @@ open class AGT: NSObject {
             return
         }
 
-        AGTTestGenerator.createUITest(testName: AGT.testName!, identifiers: identifiers, strings: strings)
+        AGTTestGenerator.createUITest(
+            testName: AGT.testName!,
+            identifiers: identifiers,
+            strings: strings
+        ) { folderPath in
+            
+            AGTArchivator.uploadFolderAsZip(
+                testName: AGT.testName!,
+                folderPath: folderPath
+            )
+            do {
+                try self.deleteTestFolder(folderPath: folderPath)
+            } catch {
+                fatalError("Delete \(AGT.testName ?? "") folder error..")
+            }
+        }
+        strings.removeAll()
         identifiers.removeAll()
         unregister()
         disable()
@@ -164,6 +183,11 @@ open class AGT: NSObject {
         if !fileManager.fileExists(atPath: folderURL.path) {
             try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
         }
+    }
+
+    private func deleteTestFolder(folderPath: String) throws {
+        let fileManager = FileManager.default
+        try fileManager.removeItem(atPath: "\(folderPath)/\(AGT.testName!)")
     }
 
     internal func clearOldData() {

@@ -1,10 +1,10 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks" "${PODS_CONFIGURATION_BUILD_DIR}/AGT" "${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library" "${PODS_CONFIGURATION_BUILD_DIR}/Swifter" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks" "${PODS_CONFIGURATION_BUILD_DIR}/AGT" "${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library" "${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive" "${PODS_CONFIGURATION_BUILD_DIR}/Swifter" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AGT/AGT.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library/Rswift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Swifter/Swifter.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON/SwiftyJSON.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AGT/AGT.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library/Rswift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive/SSZipArchive.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Swifter/Swifter.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON/SwiftyJSON.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift "$(PLATFORM_DIR)/Developer/Library/Frameworks" '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -framework "CoreGraphics" -framework "Foundation" -framework "Rswift" -framework "Swifter" -framework "SwiftyJSON" -framework "UIKit" -framework "XCTest"
+OTHER_LDFLAGS = $(inherited) -l"iconv" -l"z" -framework "CoreGraphics" -framework "Foundation" -framework "Rswift" -framework "SSZipArchive" -framework "Security" -framework "Swifter" -framework "SwiftyJSON" -framework "UIKit" -framework "XCTest"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

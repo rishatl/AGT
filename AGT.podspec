@@ -76,4 +76,5 @@ Pod::Spec.new do |s|
   s.dependency 'R.swift', '~> 6.1.0'
   s.dependency 'Swifter'
   s.dependency 'SwiftyJSON'
+  s.dependency 'SSZipArchive'
 end

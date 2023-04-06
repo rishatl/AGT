@@ -64,6 +64,9 @@
     ],
     "SwiftyJSON": [
 
+    ],
+    "SSZipArchive": [
+
     ]
   },
   "swift_version": "5.0"
