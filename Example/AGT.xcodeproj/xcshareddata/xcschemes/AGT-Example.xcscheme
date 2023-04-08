@@ -72,6 +72,17 @@
                ReferencedContainer = "container:AGT.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "79DD184729DF2EBF0016FC01"
+               BuildableName = "AGT_ExampleTests.xctest"
+               BlueprintName = "AGT_ExampleTests"
+               ReferencedContainer = "container:AGT.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

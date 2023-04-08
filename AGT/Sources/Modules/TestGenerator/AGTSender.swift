@@ -1,37 +1,15 @@
 //
-//  AGTArchivator.swift
+//  AGTSender.swift
 //  AGT
 //
-//  Created by r.latypov on 08.03.2023.
+//  Created by r.latypov on 06.04.2023.
 //
 
 import Foundation
-import SSZipArchive
 
-final class AGTArchivator {
+final class AGTSender {
 
-    static func uploadFolderAsZip(
-        testName: String,
-        folderPath: String
-    ) {
-        let fileManager = FileManager.default
-        let zipFileName = "\(testName).zip"
-        let zipFilePath = "\(folderPath)/\(zipFileName)"
-        
-        if fileManager.fileExists(atPath: zipFilePath) {
-            print("Archive file already exists.")
-            return
-        }
-        
-        let success = SSZipArchive.createZipFile(atPath: zipFilePath, withContentsOfDirectory: folderPath)
-        guard success else {
-            print("Failed to archive folder.")
-            return
-        }
-        sendFile(zipFilePath: zipFilePath, token: "", repoName: "", repoFilePath: "", commitMessage: "")
-    }
-
-    private static func sendFile(
+    static func sendFile(
         zipFilePath: String,
         token: String,
         repoName: String,
@@ -39,7 +17,7 @@ final class AGTArchivator {
         commitMessage: String
     ) {
         let token = "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"
-        let repoName = "rishatl/cloud-vision"
+        let repoName = "rishatl/AGT"
         let repoFilePath = "function"
         let commitMessage = "Added Test123"
         // Read file contents from disk
