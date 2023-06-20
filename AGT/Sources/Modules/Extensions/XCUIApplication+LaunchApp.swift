@@ -16,6 +16,8 @@ public enum LaunchArgument {
     public static let recordMode = "--recordMode"
 
     private static let uiTests = "--UI_TESTS"
+
+    public static let FBSnapshotVerifyView = true
 }
 
 enum EnvironmentVariable {

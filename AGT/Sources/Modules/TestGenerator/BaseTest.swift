@@ -5,10 +5,10 @@
 //  Created by r.latypov on 17.02.2023.
 //
 
+import FBSnapshotTestCase
 import XCTest
 
-open class BaseTest: XCTestCase {
-
+open class BaseTest: FBSnapshotTestCase {
     // MARK: Public Data Structures
 
     public typealias TestCustomCurrentDate = (testName: String, dateString: String)
@@ -18,12 +18,18 @@ open class BaseTest: XCTestCase {
 
     public lazy var app = XCUIApplication()
 
+    public let logger: IReportLogger = ReportLogger()
+
     // MARK: Lifecycle
 
     override open func setUp() {
         super.setUp()
-
         continueAfterFailure = false
+    }
+
+    override open func tearDown() {
+        super.tearDown()
+        app.terminate()
     }
 
     // MARK: Public

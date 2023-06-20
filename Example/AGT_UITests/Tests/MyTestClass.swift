@@ -8,19 +8,20 @@
 
 import AGT
 
-final class MyTestClass: BaseMockTest {
+final class MyTestClass: BaseSnapshotTest {
 
     func testHappyPath() {
 
         launchApp()
         dynamicStubs.setupStubsForGroup("Test")
 
-        let idddButton = app.otherElements["iddd"].firstMatch
+        let idddButton = app.otherElements["some id"].firstMatch
         let str1View = app.staticTexts["Send request"].firstMatch
         MainPage().apply {
             $0.runActivity(named: "Нажимаем на 1 элемент") { _ in
                 idddButton.wait().tap()
             }
+            verifyView(identifier: "snapshot_CF126E02-3923-4765-B6FD-3AB2C9959EB0")
             $0.runActivity(named: "Нажимаем на 2 элемент") { _ in
                 str1View.wait().tap()
             }

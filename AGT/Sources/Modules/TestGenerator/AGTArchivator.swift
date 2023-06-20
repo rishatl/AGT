@@ -12,7 +12,8 @@ final class AGTArchivator {
 
     static func uploadFolderAsZip(
         testName: String,
-        folderPath: String
+        folderPath: String,
+        serverURL: String
     ) {
         let fileManager = FileManager.default
         let zipFileName = "\(testName).zip"
@@ -28,59 +29,45 @@ final class AGTArchivator {
             print("Failed to archive folder.")
             return
         }
-        sendFile(zipFilePath: zipFilePath, token: "", repoName: "", repoFilePath: "", commitMessage: "")
+        sendFile(zipFilePath: zipFilePath, url: serverURL)
     }
 
     private static func sendFile(
         zipFilePath: String,
-        token: String,
-        repoName: String,
-        repoFilePath: String,
-        commitMessage: String
+        url: String
     ) {
-        let token = "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"
-        let repoName = "rishatl/cloud-vision"
-        let repoFilePath = "function"
-        let commitMessage = "Added Test123"
-        // Read file contents from disk
-        guard let fileData = FileManager.default.contents(atPath: zipFilePath) else {
-            print("Error: Could not read file at path: \(zipFilePath)")
+        // Create a session configuration
+        let sessionConfig = URLSessionConfiguration.default
+
+        // Create a session with the configuration
+        let session = URLSession(configuration: sessionConfig)
+
+        // Create a URL pointing to the zip file
+        let zipFileURL = URL(fileURLWithPath: zipFilePath)
+
+        // Create a URLRequest with the destination URL
+        guard let urlPath = URL(string: url) else {
+            print("Invalid url path")
             return
         }
+        var request = URLRequest(url: urlPath)
+        request.httpMethod = "POST"
 
-        let fileContents = fileData.base64EncodedString()
-        let apiURL = "https://api.github.com/repos/\(repoName)/contents/\(repoFilePath)"
-
-        let body = [
-            "message": commitMessage,
-            "content": fileContents,
-        ]
-
-        let jsonData = try? JSONSerialization.data(withJSONObject: body)
-
-        let url = URL(string: apiURL)!
-        var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
-        request.addValue("token \(token)", forHTTPHeaderField: "Authorization")
-        request.addValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
-        request.httpBody = jsonData
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let _ = data,
-                  let response = response as? HTTPURLResponse,
-                  error == nil else {
-                print("Error: \(error?.localizedDescription ?? "Unknown error")")
+        // Create a data task with the zip file as the body
+        let task = session.uploadTask(with: request, fromFile: zipFileURL) { (data, response, error) in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
                 return
             }
 
-            if response.statusCode == 201 {
-                print("File committed and pushed successfully!")
-            } else {
-                print("Error: \(response.statusCode)")
+            // Process the response if needed
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Response status code: \(httpResponse.statusCode)")
+                // Handle the response as needed
             }
         }
 
+        // Start the data task
         task.resume()
     }
-
 }

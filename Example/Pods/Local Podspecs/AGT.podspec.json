@@ -67,6 +67,12 @@
     ],
     "SSZipArchive": [
 
+    ],
+    "iOSSnapshotTestCase": [
+      "~> 6.2.0"
+    ],
+    "SimulatorStatusMagic": [
+      "~> 2.7"
     ]
   },
   "swift_version": "5.0"

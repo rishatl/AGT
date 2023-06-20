@@ -39,12 +39,6 @@ public extension BasePage {
         }
     }
 
-//    func verifyInPage(text: String) {
-//        XCTContext.runActivity(named: "Проверяем текст \(text)") { _ in
-//            let element = app.staticTexts.element(labelContains: text).firstMatch
-//        }
-//    }
-
     func verifyInPage(identifier: String) {
         XCTContext.runActivity(named: "Проверяем текст") { _ in
             _ = app.staticTexts.matching(identifier: identifier).firstMatch.label

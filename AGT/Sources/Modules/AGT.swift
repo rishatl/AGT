@@ -30,11 +30,12 @@ open class AGT: NSObject {
 
     internal static var testName: String?
     internal var folderURL: URL?
+    internal var isFirstEvent: Bool = false
     internal var identifiers: [String?] = []
-    internal var strings: [String] = []
+    internal var strings: [String?] = []
+    internal var snapshots: [String?] = []
 
-    internal var repoURL: String?
-    internal var authToken: String?
+    public var serverURL: String?
 
     class var swiftSharedInstance: AGT {
         struct Singleton {
@@ -80,17 +81,19 @@ open class AGT: NSObject {
         AGTTestGenerator.createUITest(
             testName: AGT.testName!,
             identifiers: identifiers,
-            strings: strings
+            strings: strings,
+            snapshots: snapshots
         ) { folderPath in
             
             AGTArchivator.uploadFolderAsZip(
                 testName: AGT.testName!,
-                folderPath: folderPath
+                folderPath: folderPath,
+                serverURL: self.serverURL ?? ""
             )
             do {
                 try self.deleteTestFolder(folderPath: folderPath)
             } catch {
-                fatalError("Delete \(AGT.testName ?? "") folder error..")
+                print("Delete \(AGT.testName ?? "") folder error..")
             }
         }
         strings.removeAll()

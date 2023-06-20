@@ -9,13 +9,19 @@ import Foundation
 
 public class AGTTestGenerator {
 
-    static func createUITest(testName: String, identifiers: [String?], strings: [String], completion: @escaping (String) -> Void) {
+    static func createUITest(
+        testName: String,
+        identifiers: [String?],
+        strings: [String?],
+        snapshots: [String?],
+        completion: @escaping (String) -> Void
+    ) {
         let fileName = "\(testName).swift"
         let folderPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
 
         let filePath = "\(folderPath)/\(testName)/\(fileName)"
 
-        let generatedTest = generateTest(testClassName: "\(testName)", identifiers: identifiers, strings: strings)
+        let generatedTest = generateTest(testClassName: "\(testName)", identifiers: identifiers, strings: strings, snapshots: snapshots)
 
         do {
             try generatedTest.write(toFile: filePath, atomically: true, encoding: .utf8)
@@ -30,7 +36,8 @@ public class AGTTestGenerator {
     private static func generateTest(
         testClassName: String,
         identifiers: [String?],
-        strings: [String]
+        strings: [String?],
+        snapshots: [String?]
     ) -> String {
         var fileContent = """
 import AGT
@@ -45,7 +52,7 @@ final class \(testClassName): BaseMockTest {
         // Assert
 
 """
-        fileContent += generateStringWithIdentifiers(identifiers: identifiers, strings: strings)
+        fileContent += generateStringWithIdentifiers(identifiers: identifiers, strings: strings, snapshots: snapshots)
         fileContent += """
     }
 }
@@ -60,7 +67,11 @@ final class MainPage: BasePage {
         return fileContent
     }
 
-    private static func generateStringWithIdentifiers(identifiers: [String?], strings: [String]) -> String {
+    private static func generateStringWithIdentifiers(
+        identifiers: [String?],
+        strings: [String?],
+        snapshots: [String?]) -> String
+    {
         var stringIdentifiers: String = ""
         for (index, identifier) in identifiers.enumerated() {
             if let identifier = identifier {
@@ -68,13 +79,11 @@ final class MainPage: BasePage {
                             let idView\(index) = app.otherElements["\(identifier)"].firstMatch
 
                     """
-            } else {
-                for string in strings {
-                    stringIdentifiers += """
-                                        let strView\(index) = app.staticTexts["\(string)"].firstMatch
+            } else if let string = strings[index] {
+                stringIdentifiers += """
+                            let strView\(index) = app.staticTexts["\(string)"].firstMatch
 
-                                """
-                }
+                    """
             }
         }
         stringIdentifiers += """
@@ -91,11 +100,16 @@ final class MainPage: BasePage {
                                 }
 
                     """
-            } else {
+            } else if let _ = strings[index] {
                 stringIdentifiers += """
                                 $0.runActivity(named: "Нажимаем на \(index) элемент с текстом") { _ in
                                     strView\(index).wait().tap()
                                 }
+
+                    """
+            } else if let snapshot = snapshots[index] {
+                stringIdentifiers += """
+                                verifyView(identifier: "\(snapshot)")
 
                     """
             }

@@ -77,4 +77,7 @@ Pod::Spec.new do |s|
   s.dependency 'Swifter'
   s.dependency 'SwiftyJSON'
   s.dependency 'SSZipArchive'
+  s.dependency 'iOSSnapshotTestCase', '~> 6.2.0'
+  s.dependency 'SimulatorStatusMagic', '~> 2.7'
+
 end
